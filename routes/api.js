@@ -2,19 +2,19 @@ const router = require("express").Router();
 const Workout = require("../models/workout.js");
 
 router.post("/api/workouts", (req, res) => {
-  console.log("Posting: "+req.body);
+  //console.log("Posting: "+req.body);
   Workout.create({})
     .then(dbTransaction => {
       res.json(dbTransaction);
     })
     .catch(err => {
-      console.log(err);
+   //   console.log(err);
       res.status(400).json(err);
     });
 });
 
 router.put("/api/workouts/:id", (req ,res) => {
-  console.log("Putting: "+ req.body.type);
+  //console.log("Putting: "+ req.body.type);
   let query = {'_id': req.params.id}
   let newData = {
     $push: {
@@ -23,6 +23,7 @@ router.put("/api/workouts/:id", (req ,res) => {
         'type':req.body.type,
         'name':req.body.name,
         'duration':req.body.duration,
+        'distance':req.body.distance,
         'weight':req.body.weight,
         'reps':req.body.reps,
         'sets':req.body.sets
@@ -31,7 +32,7 @@ router.put("/api/workouts/:id", (req ,res) => {
   }
   Workout.findOneAndUpdate(query, newData, {upsert: true, returnOriginal: false})
     .then(dbTransaction => {
-      console.log(dbTransaction);
+   //   console.log(dbTransaction);
       res.json(dbTransaction);
     })
     .catch(err => {
